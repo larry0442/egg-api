@@ -26,13 +26,34 @@ class UserController extends Controller {
   findOne: 查找
   find: 查找所有
 */
-  // async create() {
+  async create() {
+    const { ctx, service } = this;
+    ctx.validate(this.UserCreateTransfer);
+    const payload = ctx.request.body || {};
+    const res = await service.user.create(payload);
+    ctx.helper.success({ ctx, res });
+  }
 
-  // }
+  // Put - api/user/:id
+  async update() {
+    const { ctx, service } = this;
+    ctx.validate(this.UserUpdateTransfer);
+    const { id } = ctx.params;
+    const payload = ctx.request.body || {};
+    const res = await service.user.update(id, payload);
+    ctx.helper.success({ ctx, res });
+  }
 
-  // async update() {
-
-  // }
+  // remove
+  // Delete - api/user/:id
+  async remove() {
+    const { ctx, service } = this;
+    const { id } = ctx.params;
+    let res = await service.user.remove(id);
+    // 不返回删除的用户信息
+    res = {};
+    ctx.helper.success({ ctx, res });
+  }
 }
 
 module.exports = UserController;

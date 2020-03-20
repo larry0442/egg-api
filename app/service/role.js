@@ -43,8 +43,8 @@ class RoleService extends Service {
   async findOne(id) {
     const { ctx, service } = this;
     const role = await service.role.findRoleById(id);
-    if(!role){
-      throw(404, '找不到对应角色');
+    if (!role) {
+      throw (404, '找不到对应角色');
     }
     return ctx.model.Role.findById(id);
   }
@@ -53,8 +53,8 @@ class RoleService extends Service {
   async findAll(payload) {
     const { pageSize, currentPage } = payload;
     // 默认一页10条数据
-    const skip = (Number(currentPage)-1)*(Number(pageSize)||10);
-    const {ctx } = this;
+    const skip = (Number(currentPage) - 1) * (Number(pageSize) || 10);
+    const { ctx } = this;
     return ctx.model.Role.find({}).skip(skip).limit(Number(pageSize));
   }
 }
