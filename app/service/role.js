@@ -35,7 +35,27 @@ class RoleService extends Service {
     if (!role) {
       throw (404, '找不到对应角色');
     }
+    // 更新
     return ctx.model.Role.findByIdAndUpdate(id, payload);
+  }
+
+  // 根据id查找某个角色
+  async findOne(id) {
+    const { ctx, service } = this;
+    const role = await service.role.findRoleById(id);
+    if(!role){
+      throw(404, '找不到对应角色');
+    }
+    return ctx.model.Role.findById(id);
+  }
+
+  // 查找所有角色
+  async findAll(payload) {
+    const { pageSize, currentPage } = payload;
+    // 默认一页10条数据
+    const skip = (Number(currentPage)-1)*(Number(pageSize)||10);
+    const {ctx } = this;
+    return ctx.model.Role.find({}).skip(skip).limit(Number(pageSize));
   }
 }
 

@@ -47,9 +47,8 @@ class RoleController extends Controller {
     ctx.helper.success({ ctx, res });
   }
 
-  // 更新
+  // 修改
   // api/role/update/:id
-  //
   async update() {
     const { ctx, service } = this;
     // 校验参数
@@ -60,6 +59,27 @@ class RoleController extends Controller {
     const payload = ctx.request.body || {};
     await service.role.update(id, payload);
     ctx.helper.success({ ctx });
+  }
+
+  // 查找某个角色 
+  //GET -- api/role/:id
+  async findOne() {
+    const { ctx, service } = this;
+    // 组装参数
+    const { id } = ctx.params;
+    // 调用service
+    const res = await service.role.findOne(id);
+    ctx.helper.success({ ctx, res });
+  }
+
+  // 查找所有角色(好像平时分页请求都是post..emmmmm...RESTful有点迷)
+  // api/role
+  // Get -- currentPage pageSize search
+  async findAll() {
+    const { ctx, service } = this;
+    const payload = ctx.query;
+    const res = await service.role.findAll(payload);
+    ctx.helper.success({ ctx, res });
   }
 }
 module.exports = RoleController;
