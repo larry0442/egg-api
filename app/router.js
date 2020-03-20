@@ -18,4 +18,6 @@ module.exports = app => {
   router.post('/api/user/', controller.user.create);
   router.put('/api/user/:id', controller.user.update);
   router.delete('/api/user/:id', controller.user.remove);
+  router.get('/api/user/:id', controller.user.find);
+  router.get('/api/user/', controller.user.findAll);
 };

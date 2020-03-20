@@ -34,6 +34,25 @@ class UserService extends Service {
     }
     return ctx.model.User.findByIdAndRemove(id);
   }
+
+  // 根据id查找
+  async find(id) {
+    const { ctx } = this;
+    const role = await ctx.model.User.findById(id);
+    if (!role) {
+      throw (404, '找不到对应用户');
+    }
+    return role;
+  }
+
+  // 查找所有用户,分页
+  async findAll(payload) {
+    const { ctx } = this;
+    const { pageSize, currentPage } = payload;
+    // 默认一页10条数据
+    const skip = (Number(currentPage) - 1) * (Number(pageSize) || 10);
+    return ctx.model.User.find({}).skip(skip).limit(Number(pageSize));
+  }
 }
 
 module.exports = UserService;

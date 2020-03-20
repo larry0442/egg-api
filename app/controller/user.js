@@ -49,9 +49,28 @@ class UserController extends Controller {
   async remove() {
     const { ctx, service } = this;
     const { id } = ctx.params;
+    // 调用service进行具体业务逻辑操作
     let res = await service.user.remove(id);
     // 不返回删除的用户信息
     res = {};
+    ctx.helper.success({ ctx, res });
+  }
+
+  // 查询用户信息
+  //  Get- api/user/:id
+  async find() {
+    const { ctx, service } = this;
+    const { id } = ctx.params;
+    const res = await service.user.find(id);
+    ctx.helper.success({ ctx, res });
+  }
+
+  // 查询所有用户信息(简单分页 pageSize, currentPage)
+  async findAll() {
+    const { ctx, service } = this;
+    const payload = ctx.query;
+    console.log(payload);
+    const res = await service.user.findAll(payload);
     ctx.helper.success({ ctx, res });
   }
 }
