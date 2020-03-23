@@ -21,7 +21,7 @@ class RoleService extends Service {
     const role = await service.role.findRoleById(id);
     if (!role) {
       // 抛出错误: 状态码, 报错信息
-      throw (404, '没有找到相应角色');
+      ctx.throw(404, '没有找到相应角色');
     }
 
     // 查询并删除,参阅mongoose文档
@@ -33,7 +33,7 @@ class RoleService extends Service {
     // 查询是否存在这个角色
     const role = await service.role.findRoleById(id);
     if (!role) {
-      throw (404, '找不到对应角色');
+      ctx.throw(404, '找不到对应角色');
     }
     // 更新
     return ctx.model.Role.findByIdAndUpdate(id, payload);
@@ -44,7 +44,7 @@ class RoleService extends Service {
     const { ctx, service } = this;
     const role = await service.role.findRoleById(id);
     if (!role) {
-      throw (404, '找不到对应角色');
+      ctx.throw(404, '找不到对应角色');
     }
     return ctx.model.Role.findById(id);
   }

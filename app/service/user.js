@@ -9,7 +9,7 @@ class UserService extends Service {
     const { ctx, service } = this;
     const role = service.role.findOne(payload.role);
     if (!role) {
-      throw (404, '角色不存在~!');
+      ctx.throw(404, '角色不存在~!');
     }
     // 哈希加密
     payload.password = await ctx.genHash(payload.password);
@@ -20,7 +20,7 @@ class UserService extends Service {
     const { ctx } = this;
     const user = await ctx.model.User.findById(id);
     if (!user) {
-      throw (404, '找不到对应用户~!');
+      ctx.throw(404, '找不到对应用户~!');
     }
     return ctx.model.User.findByIdAndUpdate(id, payload);
   }
@@ -30,7 +30,7 @@ class UserService extends Service {
     const { ctx } = this;
     const user = await ctx.model.User.findById(id);
     if (!user) {
-      throw (404, '找不到对应用户~!');
+      ctx.throw(404, '找不到对应用户~!');
     }
     return ctx.model.User.findByIdAndRemove(id);
   }
@@ -40,9 +40,21 @@ class UserService extends Service {
     const { ctx } = this;
     const role = await ctx.model.User.findById(id);
     if (!role) {
-      throw (404, '找不到对应用户');
+      ctx.throw(404, '找不到对应用户');
     }
     return role;
+  }
+  // 根据手机号查找
+  async findByMobile(mobile) {
+    return this.ctx.model.User.findOne({ mobile });
+  }
+  // 根据id进行查找
+  async findById(id) {
+    return this.ctx.model.User.findById(id);
+  }
+  //
+  async findByIdAndUpdate(id, values) {
+    return this.ctx.model.User.findByIdAndUpdate(id, values);
   }
 
   // 查找所有用户,分页

@@ -4,7 +4,7 @@
 3. 插件:
    1. egg-mongoose
    2. eslint
-   3. egg-validate
+   3. egg-validate(https://github.com/eggjs/egg-validate)
    4. moment用户controller 增/删/查/改
    5. egg-bcrypt
    6. egg-jwt

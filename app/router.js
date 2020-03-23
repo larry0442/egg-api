@@ -20,4 +20,9 @@ module.exports = app => {
   router.delete('/api/user/:id', controller.user.remove);
   router.get('/api/user/:id', controller.user.find);
   router.get('/api/user/', controller.user.findAll);
+
+  // userAccess
+  router.post('/api/access/login', controller.userAccess.login);
+  router.get('/api/access/current', app.jwt, controller.userAccess.current);
+  router.post('/api/access/update-passwd', app.jwt, controller.userAccess.updatePasswd);
 };
