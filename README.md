@@ -5,7 +5,7 @@
    1. egg-mongoose
    2. eslint
    3. egg-validate(https://github.com/eggjs/egg-validate)
-   4. moment用户controller 增/删/查/改
+   4. moment
    5. egg-bcrypt
    6. egg-jwt
    7. image-downloader
