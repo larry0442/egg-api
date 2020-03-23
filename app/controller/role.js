@@ -61,8 +61,8 @@ class RoleController extends Controller {
     ctx.helper.success({ ctx });
   }
 
-  // 查找某个角色 
-  //GET -- api/role/:id
+  // 查找某个角色
+  // GET -- api/role/:id
   async findOne() {
     const { ctx, service } = this;
     // 组装参数

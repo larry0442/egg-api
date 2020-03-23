@@ -25,4 +25,7 @@ module.exports = app => {
   router.post('/api/access/login', controller.userAccess.login);
   router.get('/api/access/current', app.jwt, controller.userAccess.current);
   router.post('/api/access/update-passwd', app.jwt, controller.userAccess.updatePasswd);
+
+  // uploads
+  router.post('/api/files/upload', controller.upload.upload); // 需要提供fileName,只支持上传一个文件
 };
