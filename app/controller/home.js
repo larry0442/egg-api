@@ -7,6 +7,12 @@ class HomeController extends Controller {
     const { ctx } = this;
     ctx.body = 'egg-api';
   }
+
+  async mysql() {
+    const { ctx, service } = this;
+    const payload = ctx.request.body || {};
+    ctx.body = await service.home.mysql(payload);
+  }
 }
 
 module.exports = HomeController;

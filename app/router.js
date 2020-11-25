@@ -6,7 +6,7 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
-
+  router.post('/sql', controller.home.mysql);
   // role
   router.post('/api/role/', controller.role.create);
   router.delete('/api/role/:id', controller.role.destory);
