@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1584580053634_5114';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = [ 'auth' ];// 中间件执行顺序则是按照数组中的顺序执行
 
   config.security = {
     csrf: {
@@ -37,7 +37,7 @@ module.exports = appInfo => {
 
   // jwt配置
   config.jwt = {
-    secret: 'Great4-M',
+    secret: 'dsaldkjl;sakjdl;jasfkl;sakl;fl;m',
     enable: true, // default is false
     match: '/jwt', // optional
   };
@@ -75,6 +75,8 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
   };
+  // 不需要验证token的路由
+  config.routerWhiteList = [ '/admin/login', '/admin/register' ];
 
   return {
     ...config,

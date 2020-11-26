@@ -14,3 +14,12 @@ exports.success = ({ ctx, res = null, msg = '请求成功' }) => {
   };
   ctx.status = 200;
 };
+
+exports.fail = ({ ctx, res = null, msg = '请求失败' }) => {
+  ctx.body = {
+    code: 0,
+    data: res,
+    msg,
+  };
+  ctx.status = 200;
+};
