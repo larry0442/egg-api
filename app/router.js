@@ -31,4 +31,5 @@ module.exports = app => {
 
   // uploads
   router.post('/api/files/upload', controller.upload.upload); // 需要提供fileName,只支持上传一个文件
+  router.post('/upload', controller.uploadOss.uploadOss);
 };

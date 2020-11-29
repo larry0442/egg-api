@@ -17,11 +17,11 @@ module.exports = {
   },
 
   mongoose: {
-    enable: true,
+    enable: false,
     package: 'egg-mongoose',
   },
   mysql: {
-    enable: true,
+    enable: false,
     package: 'egg-mysql',
   },
 

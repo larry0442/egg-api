@@ -76,7 +76,7 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
   // 不需要验证token的路由
-  config.routerWhiteList = [ '/admin/login', '/admin/register' ];
+  config.routerWhiteList = [ '/admin/login', '/admin/register', '/upload' ];
 
   return {
     ...config,
