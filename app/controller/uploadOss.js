@@ -7,6 +7,7 @@
  * @FilePath: \egg-api\app\controller\uploadOss.js
  */
 'use strict';
+
 const Controller = require('egg').Controller;
 class UploadOssController extends Controller {
   async uploadOss() {
@@ -18,6 +19,11 @@ class UploadOssController extends Controller {
       ctx.body = {};
     }
 
+  }
+  async getUploadToken() {
+    const { ctx, service } = this;
+    const res = await service.uploadOss.getUploadToken();
+    ctx.helper.success({ ctx, res });
   }
 }
 module.exports = UploadOssController;

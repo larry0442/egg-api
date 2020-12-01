@@ -16,7 +16,7 @@ class FileManagementService extends Service {
     const options = {
       prefix: '', // 列举的文件前缀
       marker: '', // 上一次列举返回的位置标记，作为本次列举的起点信息
-      limit: 10, // 每次返回的最大列举文件数量
+      limit: 100, // 每次返回的最大列举文件数量
       delimiter: '', // 指定目录分隔符
     };
     const res = await new Promise((resolve, reject) => {

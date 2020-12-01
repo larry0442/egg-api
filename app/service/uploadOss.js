@@ -15,19 +15,25 @@ const awaitWriteStream = require('await-stream-ready').write;
 const sendToWormhole = require('stream-wormhole');
 const md5 = require('md5');
 const bucket = 'xinchi-qiniu-img-bucket'; // 要上传的空间名
-const imageUrl = 'cdn.larry0442.top'; // 空间绑定的域名
+const cdnUrl = 'cdn.larry0442.top'; // 空间绑定的域名
 // AK 和 SK 在这里查看 https://portal.qiniu.com/user/key
 const accessKey = 'iT2nv_WnPAuzhm8UI6QQGGkUu7zwBhs9LhmCFU_1'; // Access Key
 const secretKey = 'SvuXJbhtdUfmXbs2YAP7CtqMt-jL3jF2_2DnytaC'; // Secret Key
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 const options = {
   scope: bucket,
+  expires: 7200,
 };
 const putPolicy = new qiniu.rs.PutPolicy(options);
 const uploadToken = putPolicy.uploadToken(mac);
 const config = new qiniu.conf.Config();
 config.zone = qiniu.zone.Zone_z2;// 华南 Z2
 class UploadOssService extends Service {
+  async getUploadToken() {
+    return {
+      token: uploadToken,
+    };
+  }
   async uploadOss(payload) {
     const { folder } = payload;
     const { ctx } = this;
@@ -53,7 +59,7 @@ class UploadOssService extends Service {
               reject('');
             }
             if (respInfo.statusCode === 200) {
-              resolve({ ...respBody, fullPath: imageUrl + '/' + respBody.key });
+              resolve({ ...respBody, fullPath: cdnUrl + '/' + respBody.key });
             } else {
               // eslint-disable-next-line
               reject('');
