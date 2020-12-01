@@ -22,7 +22,8 @@ class UploadOssController extends Controller {
   }
   async getUploadToken() {
     const { ctx, service } = this;
-    const res = await service.uploadOss.getUploadToken();
+    const payload = ctx.request.body || {};
+    const res = await service.uploadOss.getUploadToken(payload);
     ctx.helper.success({ ctx, res });
   }
 }

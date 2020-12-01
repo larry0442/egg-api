@@ -29,7 +29,15 @@ const uploadToken = putPolicy.uploadToken(mac);
 const config = new qiniu.conf.Config();
 config.zone = qiniu.zone.Zone_z2;// 华南 Z2
 class UploadOssService extends Service {
-  async getUploadToken() {
+  async getUploadToken(payload) {
+    const { accessKey, secretKey, bucket } = payload;
+    const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+    const options = {
+      scope: bucket,
+      expires: 7200,
+    };
+    const putPolicy = new qiniu.rs.PutPolicy(options);
+    const uploadToken = putPolicy.uploadToken(mac);
     return {
       token: uploadToken,
     };
