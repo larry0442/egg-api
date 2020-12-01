@@ -31,5 +31,10 @@ module.exports = app => {
 
   // uploads
   router.post('/api/files/upload', controller.upload.upload); // 需要提供fileName,只支持上传一个文件
-  router.post('/upload', controller.uploadOss.uploadOss);
+  router.post('/api/upload', controller.uploadOss.uploadOss);
+  // file-management
+  router.get('/api/files/list', controller.fileManagement.getFileList);
+  router.get('/api/files/info', controller.fileManagement.getFileInfo);
+  router.post('/api/files/move', controller.fileManagement.updateFileName);
+  router.post('/api/files/delete', controller.fileManagement.removeFile);
 };

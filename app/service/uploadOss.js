@@ -14,10 +14,11 @@ const qiniu = require('qiniu');
 const awaitWriteStream = require('await-stream-ready').write;
 const sendToWormhole = require('stream-wormhole');
 const md5 = require('md5');
-const bucket = ''; // 要上传的空间名
-const imageUrl = ''; // 空间绑定的域名
-const accessKey = ''; // Access Key
-const secretKey = ''; // Secret Key
+const bucket = 'xinchi-qiniu-img-bucket'; // 要上传的空间名
+const imageUrl = 'cdn.larry0442.top'; // 空间绑定的域名
+// AK 和 SK 在这里查看 https://portal.qiniu.com/user/key
+const accessKey = 'iT2nv_WnPAuzhm8UI6QQGGkUu7zwBhs9LhmCFU_1'; // Access Key
+const secretKey = 'SvuXJbhtdUfmXbs2YAP7CtqMt-jL3jF2_2DnytaC'; // Secret Key
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 const options = {
   scope: bucket,
@@ -31,7 +32,9 @@ class UploadOssService extends Service {
     const { folder } = payload;
     const { ctx } = this;
     const stream = await ctx.getFileStream();
-    const filename = md5(stream.filename) + path.extname(stream.filename).toLocaleLowerCase();
+    // 文件名+md5+拓展名
+    const filename = path.basename(stream.filename, path.extname(stream.filename)) + md5(stream.filename) + md5(new Date()) + path.extname(stream.filename).toLocaleLowerCase();
+    // 本地文件流暂存目录，与bucket无关
     const localFilePath = path.join(__dirname, '../public/uploads', filename);
     const writeStream = fs.createWriteStream(localFilePath);
     try {
@@ -50,7 +53,7 @@ class UploadOssService extends Service {
               reject('');
             }
             if (respInfo.statusCode === 200) {
-              resolve(imageUrl + '/' + respBody.key);
+              resolve({ ...respBody, fullPath: imageUrl + '/' + respBody.key });
             } else {
               // eslint-disable-next-line
               reject('');
@@ -68,7 +71,7 @@ class UploadOssService extends Service {
       return false;
 
     } catch (err) {
-      // 如果出现错误，关闭管道
+      // 如果出现错误，关闭管道, 必需消费掉stream 否则浏览器可能会无响应
       await sendToWormhole(stream);
       return false;
     }

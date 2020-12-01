@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1584580053634_5114';
 
   // add your middleware config here
-  config.middleware = [ 'auth' ];// 中间件执行顺序则是按照数组中的顺序执行
+  // config.middleware = [ 'auth' ];// 中间件执行顺序则是按照数组中的顺序执行
 
   config.security = {
     csrf: {
@@ -76,7 +76,7 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
   // 不需要验证token的路由
-  config.routerWhiteList = [ '/admin/login', '/admin/register', '/upload' ];
+  config.routerWhiteList = [ '/admin/login', '/admin/register', '/upload', '/api/files/info' ];
 
   return {
     ...config,
